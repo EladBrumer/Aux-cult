@@ -1,0 +1,62 @@
+# Builds the Vite app and deploys dist/ to GitHub Pages.
+# Runs on every push to the repository default branch, and on demand.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - cursor/aux-cult-d34f
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One production deployment at a time. Do not cancel a deploy that is in progress.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Attempt to turn Pages on (Source: GitHub Actions) if it is not already.
+          # This only succeeds with a token that can administer the repository.
+          # The default GITHUB_TOKEN cannot create a Pages site.
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
