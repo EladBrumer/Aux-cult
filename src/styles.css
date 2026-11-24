@@ -359,20 +359,20 @@ img {
 }
 
 .onboard-footer {
-  position: relative;
+  display: grid;
+  gap: 0.55rem;
   padding: 0.85rem 1.25rem calc(0.85rem + var(--safe-bottom));
   border-top: 1px solid var(--line);
   background: rgba(7, 7, 8, 0.92);
 }
 
 .skip-btn {
-  position: absolute;
-  right: 1.1rem;
-  bottom: calc(0.85rem + var(--safe-bottom));
+  justify-self: end;
   font-size: 0.8rem;
   color: var(--fog);
   text-decoration: underline;
   text-underline-offset: 3px;
+  padding: 0.25rem 0.15rem;
 }
 
 /* Shell + nav */
@@ -391,43 +391,33 @@ img {
 
 .bottom-nav {
   height: calc(var(--nav-h) + var(--safe-bottom));
-  padding: 0 0.5rem var(--safe-bottom);
+  padding: 0 0.35rem var(--safe-bottom);
   background: #000;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: repeat(5, 1fr);
   align-items: center;
   position: relative;
   z-index: 20;
 }
 
-.nav-side {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-}
-
-.nav-side.left {
-  justify-content: flex-start;
-}
-
-.nav-side.right {
-  justify-content: flex-end;
-}
-
-.bottom-nav button {
+.bottom-nav > button {
   display: grid;
   justify-items: center;
   gap: 0.15rem;
   color: #7a7a80;
-  min-width: 4.2rem;
-  padding: 0.35rem 0.4rem;
+  padding: 0.35rem 0.2rem;
   font-size: 0.68rem;
   font-weight: 600;
 }
 
-.bottom-nav button.active {
+.bottom-nav > button.active {
   color: var(--paper);
+}
+
+.bottom-nav > button.nav-spacer {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .eye-slot {
@@ -523,11 +513,13 @@ img {
   position: absolute;
   left: 1.25rem;
   right: 5.5rem;
-  bottom: 7.5rem;
-  height: 48px;
+  bottom: 11.5rem;
+  height: 40px;
   display: flex;
   align-items: flex-end;
   gap: 4px;
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .reel-viz span {

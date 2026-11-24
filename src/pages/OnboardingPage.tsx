@@ -68,7 +68,7 @@ export function OnboardingPage() {
           Continue
         </button>
         <button type="button" className="skip-btn" onClick={() => completeOnboarding([])}>
-          Skip
+          Skip for now
         </button>
       </div>
     </div>
